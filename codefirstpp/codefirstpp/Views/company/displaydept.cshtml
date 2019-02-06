@@ -1,0 +1,30 @@
+﻿@model  IEnumerable<codefirstpp.Models.dept>
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>displaydept</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>Dept id</th>
+            <th>Depat Name</th>
+        </tr>
+        @foreach(var d in Model)
+        {
+            <tr>
+                <td>@d.did</td>
+                <td>@d.dname</td>
+                <td><a href="~/company/editdept/@d.did"> Edit </a></td>
+                <td><a href="~/company/deletedept/@d.did">Delete</a></td>
+            </tr>
+        }
+    </table>
+   <a href="~/company/Index" >Home</a>
+</body>
+</html>

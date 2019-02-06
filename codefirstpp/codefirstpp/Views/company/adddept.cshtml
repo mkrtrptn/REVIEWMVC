@@ -1,0 +1,28 @@
+﻿@model codefirstpp.Models.dept
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>adddept</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <table>
+            <tr>
+                <td>Did @Html.TextBoxFor(c => c.did)</td>
+            </tr>
+            <tr>
+                <td>Dname : @Html.TextBoxFor(c => c.dname)</td>
+            </tr>
+
+
+        </table>
+        <input type="submit" value="Save" />
+    }
+</body>
+</html>

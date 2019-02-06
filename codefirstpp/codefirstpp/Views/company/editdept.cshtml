@@ -1,0 +1,32 @@
+﻿@model codefirstpp.Models.dept
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>editdept</title>
+</head>
+<body>
+
+
+    @using (Html.BeginForm())
+    {
+        <table>
+            <tr>
+                <td>@Html.DisplayFor(d => d.did)</td>
+                <td>@Html.HiddenFor(d=>d.did)</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(d => d.dname)</td>
+            </tr>
+
+        </table>
+        <input type="submit" value="Update">
+    }
+</body>
+</html>
