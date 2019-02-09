@@ -1,4 +1,4 @@
-﻿@model codefirstpp.Models.dept
+﻿@model codefirstpp.Models.emp
 
 @{
     Layout = null;
@@ -7,23 +7,32 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>adddept</title>
+    <title>addemp</title>
 </head>
+
 <body>
     @using (Html.BeginForm())
     {
-        <table>
+
+        <table style="font-size:x-large;">
             <tr>
-                <td>Did @Html.TextBoxFor(c => c.did)</td>
-            </tr>
-            <tr>
-                <td>Dname : @Html.TextBoxFor(c => c.dname)</td>
+                <td>@Html.HiddenFor(e => e.eid)</td>
             </tr>
 
+            <tr>
+                <td> Name: @Html.TextBoxFor(e => e.name)</td>
+            </tr>
 
+            <tr>
+                <td> Did: @Html.TextBoxFor(e => e.did)</td>
+            </tr>
         </table>
         <input type="submit" value="Save" />
     }
     <a href="~/company/Index">Home</a>
 </body>
+
+
+
+
 </html>

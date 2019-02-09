@@ -115,6 +115,9 @@
     <Content Include="Views\company\adddept.cshtml" />
     <Content Include="Views\company\displaydept.cshtml" />
     <Content Include="Views\company\editdept.cshtml" />
+    <Content Include="Views\company\addemp.cshtml" />
+    <Content Include="Views\company\displayemp.cshtml" />
+    <Content Include="Views\company\editemp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

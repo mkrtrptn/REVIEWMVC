@@ -1,0 +1,27 @@
+﻿@model codefirstpp.Models.emp
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>editemp</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <table>
+            <tr><td>@Html.HiddenFor(e => e.eid)</td></tr>
+            <tr><td>Name : @Html.TextBoxFor(e => e.name) </td> </tr>
+            <tr><td>Did : @Html.TextBoxFor(e => e.did)</td></tr>
+        </table>
+        <input type="submit" value="Update" />
+
+    }
+    <a href="~/company/displayemp">Cancel</a>
+</body>
+</html>

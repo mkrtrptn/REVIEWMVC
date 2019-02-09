@@ -12,6 +12,7 @@ namespace codefirstpp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int did { get; set; }
+
         [Required]
         public string dname { get; set; }
     }
