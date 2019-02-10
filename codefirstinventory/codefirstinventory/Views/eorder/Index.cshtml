@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div style="background-color:cyan;border-radius:20px;padding:20px;font-size:x-large">
+
+        Select Category :  @Html.DropDownList("cat")<br /><br />
+        Select Product : <select id="select1"></select><br /><br />
+        <div id="div1">
+            <input id="quantity" placeholder="Enter Quantity" />
+            <input type="button" id="btn1" value="Submit" onclick="f2()" class="btn btn-primary">
+        </div>
+
+        <span id="sp1"></span>
+        <br/>
+        <br/>
+
+        <input type="button" onclick="f3()" value="My Orders" class="btn-success" />
+        <br />
+        <table id="table1" border="1" style="background-color:burlywood;border-radius:15px;padding:10px;" cellpadding="3">
+            <tr>
+                <td>Order Id</td>
+                <td>Product</td>
+                <td>Price </td>
+                <td>Quantity</td>
+                <td>Bill</td>
+            </tr>
+        </table>
+
+    </div>
+    
+    @*Script Start from here*@
+    
+    <script>
+        function clear() {
+            $("#quantity").val("");
+            f1();
+        }
+
+        $(function () {
+            $("#div1").hide();
+            $("#select1").append(new Option("-Product-"));
+            $("#cat").change(f1)
+            $("#table1").show();
+        });
+
+
+        function f1() {
+            $.ajax({
+                url: "/eorder/getproducts",
+                type: "post",
+                data: { "cateid": $("#cat").val() },
+                success: function (r) {
+
+                    $("#select1").empty();
+                    $("#select1").append(new Option("-Select Peoduct-"));
+                    $.each(r, function (i, p) {
+                        $("#select1").append(new Option(p.proddesc, p.prodid))
+                    });
+                    $("#div1").show();
+                },
+                error: function () {
+                    alert("Server Error ! ")
+                }
+
+            });
+        }
+
+        function f2() {
+            $("#table1").show();
+
+            $.ajax({
+                url: "/eorder/postorder",
+                type: "post",
+                data: {
+                    "quantity": $("#quantity").val(),
+                    "prodid": $("#select1").val()
+                },
+                success: function (r) {
+                    alert(r)
+
+                    if (r == "error")
+                    {
+                        $("#sp1").html("ERROR OCCURRED ! ");
+                        clear();
+                    }
+                    else {
+                        $("#sp1").html("Order Placed Total ammount to be paid :" + r);
+                        clear();
+                    }
+                },
+                error: function () {
+                    alert(" Server Error !");
+                }
+            });
+        }
+
+
+        function f3() {
+            $.ajax({
+                url: "/eorder/getorders",
+                type: "post",
+                success: function (r) {
+                    $.each(r, function (i, p) {
+                        $("#table1").append("<tr><td>" + p.orderid + "</td><td>" + p.proddesc + "</td><td>" + p.prodprice + "</td><td>" + p.quantity + "</td><td>" + p.bill + "</td></tr>");
+                   });
+                },
+                error: function () {
+                    alert("Server Error .");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
