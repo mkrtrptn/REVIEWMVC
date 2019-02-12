@@ -1,0 +1,232 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>SINGLEPAGE</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+</head>
+<body style="background-color:darkseagreen;color:black;font-size:x-large">
+    <table class="table table-striped table-dark" style="border-radius:10px;margin:30px;width:900px" cellpadding="10" cellspacing="10" width="300" align="center">
+
+        <tr><td align="right">Search : <input id="search" class="input alert-success" /></td><td><input type="button" onclick="f3()" value="Search" class="btn btn-primary" /></td> </tr>
+
+        <tr><td> Name :  <input id="name" class="input-group d-xl-inline-flex" /></td></tr>
+
+        <tr><td>Email : <input id="email" class="input-group d-xl-inline-flex" /></td></tr>
+
+        <tr><td>Phone : <input id="phone" class="input-group d-xl-inline-flex" /></td></tr>
+
+        <tr><td>DID : <input id="did" class="input-group d-xl-inline-flex" /></td></tr>
+
+        <tr><td><input type="button" id="save" value="Save" class="btn btn-success" onclick="f2()" /> &nbsp;
+            <input type="button" id="clear" value="Clear" class="btn btn-info" onclick="clear()" /></td>
+            
+            <td>
+                <input type="button" id="update" value="Update" class="btn btn-info" onclick="f4()" />
+                <input type="button" id="delete" value="Delete" class="btn btn-info" onclick="f5()" />
+            </td>
+        </tr>
+    </table>
+
+    <div id="dv1" class="alert alert-danger" role="alert">Danger</div>
+    <div id="dv2" class="alert alert-success" role="alert">Success</div>
+
+    <img src="~/Images/loading.gif" id="loading" />
+
+    <table id="table1" class="table table-striped align-content-lg-between" style="width:900px">
+        <tr><th>Eid</th><th>Name</th><th>DID</th><th>Email</th><th>Phone</th></tr>
+    </table>
+
+
+    <script>
+
+        $(function () {
+            f1();
+            $("#table1").show();
+            $("#loading").hide();
+            $("#dv1").hide();
+            $("#dv2").hide();
+            $("#search").blur(val1);
+        });
+
+
+        function f1() {   // Loading Data Into Table get API
+            $.ajax({
+
+                url: "http://localhost:53162/api/employeeAPI",
+                type: "get",
+                success: function (r) {
+                    $.each(r, function (i, p) {
+                        $("#table1").append("<tr><td>" + p.eid + "</td><td>" + p.name + "</td><td>" + p.did + "</td><td>" + p.email + "</td><td>" + p.phone)
+                    });
+                },
+                error: function () {
+                    alert("Server Error");
+                }
+            });
+        }
+
+
+
+        function f2() {    // Posting Data to Post API
+            $.ajax({
+                url: "http://localhost:53162/api/employeeAPI",
+                type: "post",
+                beforeSend: function () {
+                    $("#loading").show();
+                },
+
+                data: {
+                    "name": $("#name").val(),
+                    "email": $("#email").val(),
+                    "phone": $("#phone").val(),
+                    "did": $("#did").val()
+                },
+                success: function (r) {
+                    if (r == "success") {
+                        $("#dv2").html("Data Saved Successfully !");
+                        $("#dv2").show();
+
+                    }
+                    else {
+                        $("#dv1").html("Data Submission Failed !");
+                        $("#dv1").show();
+                    }
+                },
+                error: function () {
+                    alert("Server Error");
+                },
+                complete: function () {
+                    $("#loading").hide();
+                }
+
+            });
+        }
+
+
+        function f3() {   // Data Search get(id) Method Of WEB API
+
+            if ($("#search").val() == "") 
+            {
+                window.alert("Enter Employee Id");
+            }
+            else
+            {
+                $.ajax({
+                    url: "http://localhost:53162/api/employeeAPI",
+                    type: "get",
+                    data: { "eid": $("#search").val() },
+                    success: function (r) {
+                        if (r == null) {
+                            window.alert("Employee Not Found . ");
+                        }
+                        else {
+                            $("#name").val(r.name);
+                            $("#email").val(r.email);
+                            $("#phone").val(r.phone);
+                            $("#did").val(r.did);
+                        }
+                    },
+
+                    error: function () {
+                        alert("Server Error .. ");
+                    }
+
+
+                });
+            }
+        }
+
+        function f4()    // Data Updation PUT Method Of WEB API
+        {
+            $.ajax({
+                url: "http://localhost:53162/api/employeeAPI",
+                type:"put",
+                data: {
+                    "name": $("#name").val(),
+                    "email": $("#email").val(),
+                    "phone": $("#phone").val(),
+                    "did":$("#did").val()
+                },
+                beforeSend: function () {
+                    $("#loading").show();
+                },
+                success: function (r) {
+                    if (r == "success") {
+                        $("#div2").html("Data Updated Successfully");
+                        $("#div2").show();
+                    }
+                    else
+                    {
+                        $("#div1").html("Data Updation Failed ");
+                        $("#div1").show();
+                    }
+
+                },
+                error: function () {
+                    alert("Server Error !");
+                },
+                complete: function () {
+                    $("#loading").hide();
+                }
+            });
+
+        }
+
+
+        function f5()  //for Delete method of WEB API
+        {
+            $.ajax({
+                url: "http://localhost:53162/api/employeeAPI",
+                type: "delete",
+                data: { "eid": $("#search").val() },
+                success: function (r) {
+                    if (r == "success") {
+                        $("#div2").html("Data Deleted Successfully ");
+                        $("#div2").show();
+                    }
+                    else {
+                        $("#div1").html("Deleting Failed");
+                        $("#div1").show();
+                    }
+                    error: {
+                        alert("Server Error .. ");
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+        function clear()
+            {
+
+            $("#name").val("");
+            $("#email").val("");
+            $("#phone").val("");
+            $("#did").val("");
+
+            }
+
+
+
+
+    </script>
+
+
+
+
+
+</body>
+</html>

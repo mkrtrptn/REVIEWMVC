@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="REVIEWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="int" Nullable="false" />
+    <Property Name="dname" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="emps">
+    <Key>
+      <PropertyRef Name="eid" />
+    </Key>
+    <Property Name="eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="did" Type="int" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_dbo_emps_dbo_department_did">
+    <End Role="department" Type="Self.department" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="emps" Type="Self.emps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="did" />
+      </Principal>
+      <Dependent Role="emps">
+        <PropertyRef Name="did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="REVIEWModelStoreContainer">
+    <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="emps" EntityType="Self.emps" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_emps_dbo_department_did" Association="Self.FK_dbo_emps_dbo_department_did">
+      <End Role="department" EntitySet="department" />
+      <End Role="emps" EntitySet="emps" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
