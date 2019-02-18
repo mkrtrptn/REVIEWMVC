@@ -54,11 +54,11 @@
             $("#loading").hide();
             $("#dv1").hide();
             $("#dv2").hide();
-            $("#search").blur(val1);
+            
         });
 
 
-        function f1() {   // Loading Data Into Table get API
+        function f1() {
             $.ajax({
 
                 url: "http://localhost:53162/api/employeeAPI",
@@ -76,7 +76,7 @@
 
 
 
-        function f2() {    // Posting Data to Post API
+        function f2() {
             $.ajax({
                 url: "http://localhost:53162/api/employeeAPI",
                 type: "post",
@@ -112,8 +112,7 @@
         }
 
 
-        function f3() {   // Data Search get(id) Method Of WEB API
-
+        function f3() {
             if ($("#search").val() == "") 
             {
                 window.alert("Enter Employee Id");
@@ -145,12 +144,12 @@
             }
         }
 
-        function f4()    // Data Updation PUT Method Of WEB API
-        {
+        function f4() {
             $.ajax({
                 url: "http://localhost:53162/api/employeeAPI",
                 type:"put",
                 data: {
+                    "eid": $("#search").val(),
                     "name": $("#name").val(),
                     "email": $("#email").val(),
                     "phone": $("#phone").val(),
@@ -182,8 +181,7 @@
         }
 
 
-        function f5()  //for Delete method of WEB API
-        {
+        function f5() {
             $.ajax({
                 url: "http://localhost:53162/api/employeeAPI",
                 type: "delete",
@@ -209,8 +207,7 @@
 
 
 
-        function clear()
-            {
+        function clear(){
 
             $("#name").val("");
             $("#email").val("");

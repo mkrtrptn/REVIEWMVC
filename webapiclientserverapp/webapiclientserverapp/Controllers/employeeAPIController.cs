@@ -15,6 +15,7 @@ namespace webapiclientserverapp.Controllers
         [HttpGet]
         public List<emp> getemployees()
         {
+
             obj.Configuration.LazyLoadingEnabled = false;
             return obj.emps.ToList();
         }
